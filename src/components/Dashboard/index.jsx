@@ -15,8 +15,8 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import { Person, Settings, Group } from "@mui/icons-material";
-import { getAllSessionList } from "../../services/api"; // Assuming you have this function to fetch session data
+import { getAllSessionList, updateSessionStatus } from "../../services/api"; // Assuming you have this function to fetch session data
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
   const [sessions, setSessions] = useState([]);
@@ -40,6 +40,22 @@ const Dashboard = () => {
   useEffect(() => {
     fetchSessionStats();
   }, []);
+
+  const handleUpdateSessionStatus = async (sessionId, newStatus) => {
+    try {
+      const response = await updateSessionStatus(sessionId, {
+        isActive: !newStatus,
+      });
+      console.log("response", response);
+      if (response?.data?.status) {
+        toast.success(response?.data?.message);
+        fetchSessionStats()
+      }
+    } catch (error) {
+      console.error("Failed to update session status:", error);
+      toast.error(error);
+    }
+  };
 
   return (
     <Box sx={{ flexGrow: 1, p: 3 }}>
@@ -129,6 +145,9 @@ const Dashboard = () => {
                   <Button
                     color={session.isActive ? "error" : "success"}
                     variant="contained"
+                    onClick={() => {
+                      handleUpdateSessionStatus(session._id, session.isActive);
+                    }}
                   >
                     {session.isActive ? "Inactive" : "Active"}
                   </Button>
