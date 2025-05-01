@@ -10,15 +10,27 @@ import LoginPage from "../pages/Login/index";
 import Authentication from "../middlewares/Authentication";
 import RegisterPage from "../pages/Register";
 import DashboardPage from "../pages/Dashboard";
+import { useEffect, useState } from "react";
+import AdminAuthorization from "../middlewares/Authorization";
 
 const AppRouter = () => {
-  const isLogin = localStorage.getItem("token");
-  const isAdmin = localStorage.getItem("role") == "ADMIN";
+  const [isLogin, setIsLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    setIsLogin(!!token);
+    setIsAdmin(role === "ADMIN");
+  }, []);
   return (
     <Router>
       <Routes>
         <Route element={<Authentication />}>
-          <Route path="/dashbord" element={<DashboardPage />} />
+          <Route element={<AdminAuthorization/>}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+          </Route>
         </Route>
         {!isLogin && (
           <>
@@ -33,7 +45,7 @@ const AppRouter = () => {
           path="*"
           element={
             <Navigate
-              to={isLogin ? (isAdmin ? "/dashbord" : "/kgmfdlgmld") : "/"}
+              to={isLogin ? (!!isAdmin ? "/dashboard" : "/dashboard") : "/"}
             />
           }
         />

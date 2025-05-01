@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 console.log("API_BASE_URL", process.env.REACT_APP_API_BASE_URL);
 const axiosInstance = axios.create({
@@ -24,8 +25,13 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
+      const navigate = useNavigate();
+
       const { status } = error.response;
       if (status === 401) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        navigate("/");
         console.error("Unauthorized! Logging out...");
       } else if (status === 500) {
         console.error("Server error.");

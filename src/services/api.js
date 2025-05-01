@@ -8,3 +8,8 @@ export const singUpUser = (payload) => {
 export const signInUser = (payload) => {
   return axiosInstance.post("user/singin", payload);
 };
+
+
+export const getAllSessionList = () => {
+  return axiosInstance.get("session/get-all");
+};
