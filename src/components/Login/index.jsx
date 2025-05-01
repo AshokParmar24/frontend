@@ -5,14 +5,16 @@ import {
   Button,
   TextField,
   Typography,
-   InputAdornment,
-   IconButton,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
- 
+import { signInUser } from "../../services/api";
+import { toast } from "react-hot-toast";
+
 const Login = () => {
   const {
     register,
@@ -25,9 +27,27 @@ const Login = () => {
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
-  const onSubmit = (data) => {
-    
-    console.log("loginglogin",data)
+  const onSubmit = async (data) => {
+    try {
+      const response = await signInUser(data);
+      console.log("response", response);
+      if (response?.data?.status) {
+        localStorage.setItem("token", response.data.user.token);
+        localStorage.setItem("role", response.data.user.role);
+
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      const errors = error?.response?.data?.errors;
+
+      if (Array.isArray(errors)) {
+        errors.forEach((err) => toast.error(err.msg));
+      } else {
+        toast.error(
+          error?.response?.data?.message || error?.message || "Login failed"
+        );
+      }
+    }
   };
 
   return (
