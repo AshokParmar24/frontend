@@ -12,6 +12,8 @@ import RegisterPage from "../pages/Register";
 import DashboardPage from "../pages/Dashboard";
 import { useEffect, useState } from "react";
 import AdminAuthorization from "../middlewares/Authorization";
+import UserProfilePage from "../pages/UserProfile/UserProfile";
+import KthElementPage from "../pages/KthElement/KthElement";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -28,9 +30,13 @@ const AppRouter = () => {
     <Router>
       <Routes>
         <Route element={<Authentication />}>
-          <Route element={<AdminAuthorization/>}>
+          <Route element={<AdminAuthorization />}>
             <Route path="/dashboard" element={<DashboardPage />} />
           </Route>
+          <Route path="/profile" element={<UserProfilePage />} />
+          <Route path="/kthelement" element={<KthElementPage />} />
+
+          
         </Route>
         {!isLogin && (
           <>

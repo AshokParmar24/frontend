@@ -7,15 +7,19 @@ import {
   ListItemText,
   Divider,
 } from "@mui/material";
-import { Dashboard, Settings } from "@mui/icons-material";
+import { Dashboard } from "@mui/icons-material";
 import { NavLink, useLocation } from "react-router-dom";
+import PersonIcon from '@mui/icons-material/Person';
+import AddTaskIcon from '@mui/icons-material/AddTask';
 
 const Sidebar = () => {
   const location = useLocation();
 
   const menuItems = [
     { text: "Dashboard", icon: <Dashboard />, path: "/dashboard" },
-    { text: "Settings", icon: <Settings />, path: "/admin/settings" },
+    { text: "Profile", icon: <PersonIcon />, path: "/profile" },
+    { text: "Kth Element", icon: <PersonIcon />, path: "/kthelement" },
+
   ];
 
   return (
