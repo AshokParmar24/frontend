@@ -1,8 +1,15 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/");
+  };
   return (
     <AppBar
       position="fixed"
@@ -12,7 +19,7 @@ const Navbar = () => {
         <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
           KoffeeKodes
         </Typography>
-        <Button color="inherit" component={Link} to="/login">
+        <Button color="inherit" onClick={logout}>
           Logout
         </Button>
       </Toolbar>
