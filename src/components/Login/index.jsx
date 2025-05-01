@@ -5,15 +5,14 @@ import {
   Button,
   TextField,
   Typography,
-  IconButton,
-  InputAdornment,
+   InputAdornment,
+   IconButton,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
-import { userlsit } from "../../utils/contants";
-
+ 
 const Login = () => {
   const {
     register,
@@ -27,16 +26,8 @@ const Login = () => {
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
   const onSubmit = (data) => {
-    const isAvailableUser = userlsit.find(
-      (v) => v.email === data.email && v.password === data.password
-    );
-    console.log("isAvailableUser :>> ", isAvailableUser);
-    if (isAvailableUser) {
-      localStorage.setItem("token", "true");
-      navigate("/admin/dashboard");
-    } else {
-      alert("Invalid email or password");
-    }
+    
+    console.log("loginglogin",data)
   };
 
   return (
