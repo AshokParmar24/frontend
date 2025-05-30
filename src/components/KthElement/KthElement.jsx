@@ -30,6 +30,7 @@ class MinHeap {
   pop() {
     const top = this.peek();
     const bottom = this.heap.pop();
+    console.log("top", top, "bottom", bottom, this.heap);
     if (this.size()) {
       this.heap[0] = bottom;
       this._sinkDown();
@@ -63,8 +64,7 @@ class MinHeap {
       }
       if (
         rightIdx < length &&
-        this.heap[rightIdx] <
-          (swap === null ? element : this.heap[leftIdx])
+        this.heap[rightIdx] < (swap === null ? element : this.heap[leftIdx])
       ) {
         swap = rightIdx;
       }
@@ -109,7 +109,7 @@ const KthElement = () => {
   const kth = useMemo(() => {
     if (!k || k > stream.length || k <= 0) return "N/A";
     const instance = new KthLargest(k, stream);
-    return instance.getKthLargest();
+     return instance.getKthLargest();
   }, [stream, k]);
 
   const handleInitialArray = () => {
@@ -119,7 +119,7 @@ const KthElement = () => {
       .filter((n) => !isNaN(n));
     setStream(nums);
     setInitialInput("");
-    setK(null); // reset k when stream is reset
+    setK(null);
   };
 
   const handleSetK = () => {
@@ -197,9 +197,7 @@ const KthElement = () => {
       {/* Output */}
       {k && (
         <Box mt={4}>
-          <Typography variant="h6">
-            Current Kth Largest: {kth}
-          </Typography>
+          <Typography variant="h6">Current Kth Largest: {kth}</Typography>
           <Typography variant="subtitle1" mt={2}>
             Stream:
           </Typography>

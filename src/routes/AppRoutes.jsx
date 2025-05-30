@@ -18,6 +18,7 @@ import KthElementPage from "../pages/KthElement/KthElement";
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,7 +26,9 @@ const AppRouter = () => {
 
     setIsLogin(!!token);
     setIsAdmin(role === "ADMIN");
+    setAuthChecked(true);
   }, []);
+  if (!authChecked) return null;
   return (
     <Router>
       <Routes>
@@ -35,8 +38,6 @@ const AppRouter = () => {
           </Route>
           <Route path="/profile" element={<UserProfilePage />} />
           <Route path="/kthelement" element={<KthElementPage />} />
-
-          
         </Route>
         {!isLogin && (
           <>
@@ -51,7 +52,7 @@ const AppRouter = () => {
           path="*"
           element={
             <Navigate
-              to={isLogin ? (!!isAdmin ? "/dashboard" : "/dashboard") : "/"}
+              to={isLogin ? (!!isAdmin ? "/dashboard" : "/profile") : "/"}
             />
           }
         />

@@ -5,7 +5,7 @@ const AdminAuthorization = () => {
   const role = localStorage.getItem("role");
 
   if (!token || role !== "ADMIN") {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/profile" replace />;
   }
 
   return <Outlet />;
